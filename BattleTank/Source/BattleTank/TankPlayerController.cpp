@@ -47,6 +47,34 @@ void ATankPlayerController::AimTowardsCrosshair()
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
 	HitLocation = FVector(1.0);
-	return true;
+
+	// Determine the screen location of the crosshair
+	int32 ViewportSizeX, ViewportSizeY;
+	GetViewportSize(ViewportSizeX, ViewportSizeY);
+	FVector2D ScreenLocation = FVector2D
+	(
+			ViewportSizeX * CrosshairXLocation,
+			ViewportSizeY * CrosshairYLocation
+	);
+
+	FVector LookDirection;
+	if (GetLookDirection(ScreenLocation, LookDirection))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("World direction: %s"), *LookDirection.ToString());
+	}
+
+	return false;
+}
+
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
+{
+	FVector WorldLocation; // To be discarded
+	return DeprojectScreenPositionToWorld
+	(
+		ScreenLocation.X,
+		ScreenLocation.Y,
+		WorldLocation,
+		LookDirection
+	);
 }
 

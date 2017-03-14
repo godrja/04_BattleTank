@@ -26,4 +26,15 @@ public:
 	void AimTowardsCrosshair();
 
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
+
+private:
+	// Relative horizontal position of the crosshair at the viewport
+	UPROPERTY(EditAnywhere)
+	float CrosshairXLocation = 0.5;
+
+	// Relative vertical position of the crosshair at the viewport
+	UPROPERTY(EditAnywhere)
+	float CrosshairYLocation = 0.33333;
+
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
 };
