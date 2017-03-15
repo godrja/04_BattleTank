@@ -32,16 +32,14 @@ ATank* ATankPlayerController::GetControlledTank() const
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!GetControlledTank()) { return; }
+	ATank* ControlledTank = GetControlledTank();
+	if (!ControlledTank) { return; }
 
-	// Get world location through the crosshair (line trace)
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString());
+		ControlledTank->AimAt(HitLocation);
 	}
-	// If it hits the landscape 
-		// Tell the controlled tank to aim at this point
 }
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
@@ -60,7 +58,14 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("World direction: %s"), *LookDirection.ToString());
+		if (GetLookVectorHitLocation(LookDirection, HitLocation))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString());
+		} 
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Nothing has been hit"));
+		}
 	}
 
 	return false;
@@ -78,3 +83,29 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 	);
 }
 
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const
+{
+	FHitResult HitResult;
+	FVector Start = GetPlayerLocation();
+	FVector End = Start + LookDirection * 10000;
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECollisionChannel::ECC_Visibility))
+	{
+		HitLocation = HitResult.Location;
+		UE_LOG(LogTemp, Warning, TEXT("Object hit is: %s"), *HitResult.GetActor()->GetName());
+		return true;
+	}
+	else
+	{
+		HitLocation = FVector(0.0);
+		return false;
+	}
+}
+
+FVector ATankPlayerController::GetPlayerLocation() const
+{
+	FVector PlayerLocation;
+	FRotator PlayerRotation;
+	GetPlayerViewPoint(PlayerLocation, PlayerRotation);
+	// Also coult you PlayerCameraManager->GetCameraLocation()
+	return PlayerLocation;
+}

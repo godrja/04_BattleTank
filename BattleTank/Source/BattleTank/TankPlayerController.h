@@ -36,5 +36,13 @@ private:
 	UPROPERTY(EditAnywhere)
 	float CrosshairYLocation = 0.33333;
 
+	// Maximum length of aiming
+	UPROPERTY(EditAnywhere)
+	int32 LineTraceRange = 1000000; // 10 km
+
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
+
+	FVector GetPlayerLocation() const;
 };

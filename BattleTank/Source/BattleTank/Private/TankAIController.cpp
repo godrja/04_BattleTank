@@ -4,7 +4,6 @@
 #include "TankAIController.h"
 
 
-// TODO: Remove me plis
 ATank* ATankAIController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
@@ -30,7 +29,26 @@ void ATankAIController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AI: Player tank is: %s."), *(PlayerTank->GetName()));
 	}
-
 }
 
+void ATankAIController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	AimTowardsPlayerTank();
+}
+
+void ATankAIController::AimTowardsPlayerTank()
+{
+	ATank* PlayerTank = GetPlayerTank();
+	if (!PlayerTank) { return; }
+	ATank* ControlledTank = GetControlledTank();
+	if (!ControlledTank) { return; }
+
+	// Move towards the player
+	
+	ControlledTank->AimAt(PlayerTank->GetActorLocation());
+
+	// Fire if ready
+}
 
