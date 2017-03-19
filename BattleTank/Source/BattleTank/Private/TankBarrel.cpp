@@ -3,11 +3,13 @@
 #include "BattleTank.h"
 #include "TankBarrel.h"
 
-void UTankBarrel::Elevate(float DegreesPerSecond)
+void UTankBarrel::Elevate(float RelativeSpeed)
 {
 	// Determine the find pitch angle based on the AimDirection
 	// Change the barren pitch angle to make it closer to the desired value based on the delta seconds
-	UE_LOG(LogTemp, Warning, TEXT("UTankBarrel::Elevate() called"));
+	auto Time = GetWorld()->GetTimeSeconds();
+
+	UE_LOG(LogTemp, Warning, TEXT("%f: UTankBarrel::Elevate() called"), Time);
 }
 
 

@@ -33,6 +33,7 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel * ReferenceToSet)
 void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
+
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 
@@ -42,11 +43,17 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 		OutLaunchVelocity,
 		StartLocation,
 		WorldSpaceAim,
-		LaunchSpeed
+		LaunchSpeed,
+		ESuggestProjVelocityTraceOption::DoNotTrace
 	))
 	{
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
+		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found."), GetWorld()->GetTimeSeconds());
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%f: Aim not found."), GetWorld()->GetTimeSeconds());
 	}
 }
 
