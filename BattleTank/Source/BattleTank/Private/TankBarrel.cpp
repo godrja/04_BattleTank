@@ -7,9 +7,15 @@ void UTankBarrel::Elevate(float RelativeSpeed)
 {
 	// Determine the find pitch angle based on the AimDirection
 	// Change the barren pitch angle to make it closer to the desired value based on the delta seconds
-	auto Time = GetWorld()->GetTimeSeconds();
+	
+	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1, 1);
 
-	UE_LOG(LogTemp, Warning, TEXT("%f: UTankBarrel::Elevate() called"), Time);
+	auto ElevationChange = RelativeSpeed * MaxDegreesPerSecond * GetWorld()->DeltaTimeSeconds;
+	auto RawNewElevation = RelativeRotation.Pitch + ElevationChange;
+
+	auto ClampedNewElevation = FMath::Clamp<float>(RawNewElevation, MinElevationDegrees, MaxElevationDegrees);
+
+	SetRelativeRotation(FRotator(ClampedNewElevation, 0.0f, 0.0f));
 }
 
 

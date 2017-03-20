@@ -43,7 +43,11 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 		OutLaunchVelocity,
 		StartLocation,
 		WorldSpaceAim,
-		LaunchSpeed
+		LaunchSpeed,
+		false,
+		0.0f,
+		0.0f,
+		ESuggestProjVelocityTraceOption::DoNotTrace
 	))
 	{
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
@@ -61,7 +65,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	UE_LOG(LogTemp, Warning, TEXT("AimingAsRotator %s"), *AimAsRotator.ToString());
 
-	Barrel->Elevate(5); // TODO: Remove the magic number
+	Barrel->Elevate(DeltaRotator.Pitch);
 }
