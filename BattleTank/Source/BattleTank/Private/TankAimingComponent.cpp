@@ -2,6 +2,7 @@
 
 #include "BattleTank.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "TankAimingComponent.h"
 
 
@@ -30,6 +31,11 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel * ReferenceToSet)
 	Barrel = ReferenceToSet;
 }
 
+void UTankAimingComponent::SetTurretReference(UTankTurret * ReferenceToSet)
+{
+	Turret = ReferenceToSet;
+}
+
 void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
@@ -51,12 +57,8 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 	))
 	{
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
+		RotateTurretTowards(AimDirection);
 		MoveBarrelTowards(AimDirection);
-		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found."), GetWorld()->GetTimeSeconds());
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%f: Aim not found."), GetWorld()->GetTimeSeconds());
 	}
 }
 
@@ -68,3 +70,15 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 	Barrel->Elevate(DeltaRotator.Pitch);
 }
+
+void UTankAimingComponent::RotateTurretTowards(FVector AimDirection)
+{
+	auto TurretRotator = Turret->GetForwardVector().Rotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - TurretRotator;
+	UE_LOG(LogTemp, Warning, TEXT("TurretRotator: %s"), *TurretRotator.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *AimAsRotator.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("DeltaRotator: %s"), *DeltaRotator.ToString());
+	Turret->Rotate(DeltaRotator.Yaw);
+}
+
