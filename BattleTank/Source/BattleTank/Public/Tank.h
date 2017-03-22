@@ -21,12 +21,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret* ReferenceToSet);
 
+	UFUNCTION(BlueprintCallable, Category = Control)
+	void Fire();
+
 	void AimAt(FVector HitLocation);
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
+	UPROPERTY(EditAnywhere, Category = Firing)
+		float LaunchSpeed = 4000;
+
 	// Sets default values for this pawn's properties
 	ATank();
 
@@ -36,6 +42,4 @@ private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
-	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 4000;
 };
