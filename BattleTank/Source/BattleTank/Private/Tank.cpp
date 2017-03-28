@@ -42,16 +42,15 @@ void ATank::SetTurretReference(UTankTurret * ReferenceToSet)
 
 void ATank::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("ATank::Fire() called"));
-
 	if (!Barrel) { return; }
 
-	AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>
+	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>
 	(
 		ProjectileBlueprint,
 		Barrel->GetSocketLocation(FName("Projectile")),
 		Barrel->GetSocketRotation(FName("Projectile"))
 	);
+	Projectile->Launch(LaunchSpeed);
 }
 
 void ATank::AimAt(FVector HitLocation)
