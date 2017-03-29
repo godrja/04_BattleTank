@@ -27,15 +27,15 @@ public:
 
 private:
 	// Relative horizontal position of the crosshair at the viewport
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrosshairXLocation = 0.5;
 
 	// Relative vertical position of the crosshair at the viewport
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrosshairYLocation = 0.33333;
 
 	// Maximum length of aiming
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	int32 LineTraceRange = 1000000; // 10 km
 
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;

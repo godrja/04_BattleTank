@@ -32,4 +32,3 @@ void AProjectile::Launch(float Speed)
 	TankProjectileMovementComponent->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	TankProjectileMovementComponent->Activate();
 }
-

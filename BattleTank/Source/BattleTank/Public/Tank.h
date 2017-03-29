@@ -31,14 +31,19 @@ protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
-	UPROPERTY(EditAnywhere, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 4000;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ReloadTimeInSeconds = 3;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
 
 	// Local tank barrel reference
 	UTankBarrel* Barrel = nullptr;
+
+	double LastFireTime = 0;
 
 	// Sets default values for this pawn's properties
 	ATank();
