@@ -7,6 +7,7 @@
 
 class UTankBarrel;
 class UTankTurret;
+class UTankTrack;
 class UTankAimingComponent;
 class AProjectile;
 
@@ -22,6 +23,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret* ReferenceToSet);
 
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetLeftTrackReference(UTankTrack* ReferenceToSet);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetRightTrackReference(UTankTrack* ReferenceToSet);
+
 	UFUNCTION(BlueprintCallable, Category = Control)
 	void Fire();
 
@@ -31,19 +38,6 @@ protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	float LaunchSpeed = 4000;
-
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	float ReloadTimeInSeconds = 3;
-
-	UPROPERTY(EditAnywhere, Category = Setup)
-	TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
-
-	// Local tank barrel reference
-	UTankBarrel* Barrel = nullptr;
-
-	double LastFireTime = 0;
 
 	// Sets default values for this pawn's properties
 	ATank();
@@ -53,5 +47,23 @@ private:
 	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float LaunchSpeed = 4000;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ReloadTimeInSeconds = 3;
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
+
+	// Local tank barrel reference
+	UTankBarrel* Barrel = nullptr;
+
+	// Local tank track reference
+	UTankTrack* LeftTrack = nullptr;
+	UTankTrack* RightTrack = nullptr;
+
+	double LastFireTime = 0;
 
 };
