@@ -40,16 +40,6 @@ void ATank::SetTurretReference(UTankTurret * ReferenceToSet)
 	TankAimingComponent->SetTurretReference(ReferenceToSet);
 }
 
-void ATank::SetLeftTrackReference(UTankTrack* ReferenceToSet)
-{
-	LeftTrack = ReferenceToSet;
-}
-
-void ATank::SetRightTrackReference(UTankTrack* ReferenceToSet)
-{
-	RightTrack = ReferenceToSet;
-}
-
 void ATank::Fire()
 {
 	if (!Barrel) { return; }

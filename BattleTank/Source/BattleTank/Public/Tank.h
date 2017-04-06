@@ -23,12 +23,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret* ReferenceToSet);
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetLeftTrackReference(UTankTrack* ReferenceToSet);
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetRightTrackReference(UTankTrack* ReferenceToSet);
-
 	UFUNCTION(BlueprintCallable, Category = Control)
 	void Fire();
 
@@ -38,7 +32,6 @@ protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
-
 	// Sets default values for this pawn's properties
 	ATank();
 
@@ -59,10 +52,6 @@ private:
 
 	// Local tank barrel reference
 	UTankBarrel* Barrel = nullptr;
-
-	// Local tank track reference
-	UTankTrack* LeftTrack = nullptr;
-	UTankTrack* RightTrack = nullptr;
 
 	double LastFireTime = 0;
 
