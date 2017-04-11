@@ -16,4 +16,6 @@ private:
 	virtual void Tick(float DeltaSeconds) override;
 
 	void AimTowardsPlayerTank();
+	
+	float AcceptanceRadius = 3000.0f; // assuming it's in centimeters
 };
