@@ -18,4 +18,5 @@ private:
 	void AimTowardsPlayerTank();
 	
 	float AcceptanceRadius = 3000.0f; // assuming it's in centimeters
+	
 };

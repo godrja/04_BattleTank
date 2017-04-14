@@ -44,7 +44,7 @@ void UTankAimingComponent::SetTurretReference(UTankTurret * ReferenceToSet)
 	Turret = ReferenceToSet;
 }
 
-void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector WorldSpaceAim)
 {
 	if (!ensure(Barrel)) { return; }
 

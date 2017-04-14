@@ -35,7 +35,7 @@ public:
 
 	void SetTurretReference(UTankTurret* ReferenceToSet);
 
-	void AimAt(FVector WorldSpaceAim, float LaunchSpeed);
+	void AimAt(FVector WorldSpaceAim);
 
 	void MoveBarrelTowards(FVector AimDirection);
 
@@ -44,6 +44,9 @@ public:
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Locked;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float LaunchSpeed = 4000;
 
 private:
 	UTankBarrel* Barrel = nullptr;
