@@ -2,20 +2,21 @@
 
 #include "BattleTank.h"
 #include "Public/Tank.h"
+#include "TankAimingComponent.h"
 #include "TankPlayerController.h"
 
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto ControlledTank = GetControlledTank();
-	if (!ControlledTank) 
+	UTankAimingComponent* AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if (AimingComponent) 
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Controlled tank not found."));
+		FoundAimingComponent(AimingComponent);
 	}
 	else 
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Controlled tank: %s."), *(ControlledTank->GetName()));
+		UE_LOG(LogTemp, Warning, TEXT("Aiming Component not found on a tank at BeginPlay"));
 	}
 }
 
@@ -34,7 +35,7 @@ ATank* ATankPlayerController::GetControlledTank() const
 void ATankPlayerController::AimTowardsCrosshair()
 {
 	ATank* ControlledTank = GetControlledTank();
-	if (!ControlledTank) { return; }
+	if (!ensure(ControlledTank)) { return; }
 
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation))
@@ -101,6 +102,6 @@ FVector ATankPlayerController::GetPlayerLocation() const
 	FVector PlayerLocation;
 	FRotator PlayerRotation;
 	GetPlayerViewPoint(PlayerLocation, PlayerRotation);
-	// Also coult you PlayerCameraManager->GetCameraLocation()
+	// Also could use PlayerCameraManager->GetCameraLocation()
 	return PlayerLocation;
 }
