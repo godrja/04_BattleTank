@@ -13,6 +13,14 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+
+
+void ATank::BeginPlay()
+{
+	APawn::BeginPlay();
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+}
+
 void ATank::Fire()
 {
 	if (!ensure(Barrel)) { return; }
