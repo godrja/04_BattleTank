@@ -16,15 +16,13 @@ void ATankAIController::Tick(float DeltaSeconds)
 
 	// Move towards the player
 	MoveToActor(
-		PlayerTank, 
-		AcceptanceRadius, 
+		PlayerTank,
+		AcceptanceRadius,
 		true, // stop on overlap
 		true, // use path-finding
 		false // can strafe
 	);
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
-	
-	// TODO: Fix firing
-	//ControlledTank->Fire();
+	AimingComponent->Fire();
 }
 

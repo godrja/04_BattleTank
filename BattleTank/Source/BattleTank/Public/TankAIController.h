@@ -5,8 +5,6 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-class ATank;
-
 UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
 {
@@ -15,8 +13,6 @@ class BATTLETANK_API ATankAIController : public AAIController
 private:
 	virtual void Tick(float DeltaSeconds) override;
 
-	void AimTowardsPlayerTank();
-	
 	float AcceptanceRadius = 3000.0f; // assuming it's in centimeters
 	
 };
