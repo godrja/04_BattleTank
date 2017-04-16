@@ -9,10 +9,12 @@ UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
-	
+
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float AcceptanceRadius = 80000.0f;
+
 private:
 	virtual void Tick(float DeltaSeconds) override;
-
-	float AcceptanceRadius = 3000.0f; // assuming it's in centimeters
 	
 };

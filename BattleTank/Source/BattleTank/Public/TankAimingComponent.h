@@ -14,7 +14,8 @@ enum class EFiringState : uint8
 {
 	Reloading, 
 	Aiming, 
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -34,17 +35,20 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int32 GetRoundsLeft() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	void Fire();
+
 	void AimAt(FVector WorldSpaceAim);
 
 	void MoveBarrelTowards(FVector AimDirection);
 
 	bool IsBarrelMoving() const;
 
-	void RotateTurretTowards(FVector AimDirection);
+	EFiringState GetFiringState() const;
 
-	UFUNCTION(BlueprintCallable, Category = Control)
-	void Fire();
-	
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
@@ -58,9 +62,13 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
 
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	int32 RoundsLeft = 3;
+
 private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 	double LastFireTime = 0;
 	FVector LastAimDirection = FVector::ZeroVector;
+	
 };

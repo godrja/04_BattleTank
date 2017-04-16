@@ -23,6 +23,9 @@ void ATankAIController::Tick(float DeltaSeconds)
 		false // can strafe
 	);
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
-	AimingComponent->Fire();
+	if (AimingComponent->GetFiringState() == EFiringState::Locked)
+	{
+		AimingComponent->Fire();
+	}
 }
 
