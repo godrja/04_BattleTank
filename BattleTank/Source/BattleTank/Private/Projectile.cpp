@@ -11,6 +11,14 @@ AProjectile::AProjectile()
 	PrimaryActorTick.bCanEverTick = true;
 
 	TankProjectileMovementComponent = CreateDefaultSubobject<UTankProjectileMovementComponent>(FName("Projectile Movement Component"));
+
+ 	CollisionMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Collision Mesh"));
+	SetRootComponent(CollisionMesh);
+	CollisionMesh->SetNotifyRigidBodyCollision(true);
+	CollisionMesh->SetVisibility(false);
+
+	LaunchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Blast"));
+	LaunchBlast->AttachTo(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -24,7 +32,6 @@ void AProjectile::BeginPlay()
 void AProjectile::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
-
 }
 
 void AProjectile::Launch(float Speed)
