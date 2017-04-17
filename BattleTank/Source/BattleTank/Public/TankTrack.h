@@ -21,6 +21,7 @@ protected:
 	// Max force per tracks in newtons
 	UPROPERTY(EditDefaultsOnly)
 	float TrackMaxDrivingForce = 107280;
+
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 

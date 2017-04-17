@@ -15,7 +15,6 @@ void UTankTrack::BeginPlay()
 	FScriptDelegate ScriptDelegate;
 	ScriptDelegate.BindUFunction(this, FName("OnHit"));
 	OnComponentHit.Add(ScriptDelegate);
-//	OnComponentHit.__Internal_AddDynamic(this, &UTankTrack::OnHit, FName("OnHit"));
 }
 
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
