@@ -17,4 +17,10 @@ protected:
 private:
 	virtual void Tick(float DeltaSeconds) override;
 	
+	virtual void SetPawn(APawn* InPawn) override;
+
+	UFUNCTION()
+	void WhenTankDied();
+
+	FTankDeath OnTankDeath;
 };

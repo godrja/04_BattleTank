@@ -2,6 +2,7 @@
 
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
+#include "Tank.h"
 #include "TankPlayerController.h"
 
 void ATankPlayerController::BeginPlay()
@@ -56,6 +57,25 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	return false;
 }
 
+void ATankPlayerController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+
+	if (!InPawn) { return; }
+
+	ATank* ControlledTank = Cast<ATank>(InPawn);
+
+	if (ControlledTank)
+	{
+		ControlledTank->OnTankDeath.AddUniqueDynamic(this, &ATankPlayerController::WhenTankDied);
+	}
+}
+
+void ATankPlayerController::WhenTankDied()
+{
+	StartSpectatingOnly();
+}
+
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
 {
 	FVector WorldLocation; // To be discarded
@@ -73,7 +93,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	FHitResult HitResult;
 	FVector Start = GetPlayerLocation();
 	FVector End = Start + LookDirection * 80000;
-	if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECollisionChannel::ECC_Visibility))
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECollisionChannel::ECC_Camera))
 	{
 		HitLocation = HitResult.Location;
 		return true;

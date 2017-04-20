@@ -12,9 +12,7 @@ UTankTrack::UTankTrack()
 
 void UTankTrack::BeginPlay()
 {
-	FScriptDelegate ScriptDelegate;
-	ScriptDelegate.BindUFunction(this, FName("OnHit"));
-	OnComponentHit.Add(ScriptDelegate);
+	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
 }
 
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)

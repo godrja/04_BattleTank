@@ -22,9 +22,14 @@ public:
 
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
 
+	virtual void SetPawn(APawn* InPawn) override;
+
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
+
+	UFUNCTION()
+	void WhenTankDied();
 
 private:
 	// Relative horizontal position of the crosshair at the viewport
